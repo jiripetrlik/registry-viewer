@@ -1,0 +1,102 @@
+body {
+    font-family: sans-serif;
+}
+
+h1 {
+    font-family: sans-serif;
+    font-size: 28px;
+    color: black;
+    text-align: center;
+    font-weight: bolder;
+}
+
+h2 {
+    font-family: sans-serif;
+    font-size: 18px;
+    color: darkgray;
+    text-align: center;
+    font-weight: bolder;
+}
+
+ul.bottom_menu {
+    text-align: center;
+}
+
+ul.bottom_menu li {
+    display:inline-block;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.result_box {
+    display: table;
+    margin-left:auto;
+    margin-right:auto;
+    padding: 20px;
+    width: 350px;
+    border-style: solid;
+    border-width: thin;
+    text-align: center;
+}
+
+.error_box {
+    display: table;
+    margin-left:auto;
+    margin-right:auto;
+    padding: 20px;
+    width: 350px;
+    border-style: solid;
+    border-width: thin;
+    text-align: center;
+    color: red;
+    font-weight: bolder;
+}
+
+.info_table {
+    margin-left:auto;
+    margin-right:auto;
+    border-collapse: collapse;
+}
+
+.info_table td {
+    border: 1px solid;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#connect_form {
+    margin-left:auto;
+    margin-right:auto;
+    padding: 20px;
+    border-style: solid;
+    border-width: thin;
+}
+
+#connect_form input[type="submit"] {
+    display: block;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#main_menu {
+    float: left;
+    margin-top: 40px;
+    width: 160px;
+    height: 150px;
+    margin-bottom: 300px;
+    scroll: hidden;
+    border-style: solid;
+    border-width: thin;
+}
+
+#main_menu h1 {
+    font-family: sans-serif;
+    font-size: 18px;
+    color: black;
+    text-align: center;
+    font-weight: bolder;
+}
+
+#dialog-confirm {
+    display: none;
+}

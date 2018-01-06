@@ -1,0 +1,18 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<body>
+<div layout:fragment="content">
+    <h1>Tags list</h1>
+    <div class="success" th:unless="${error}">
+    <table th:if="${tags}"  class="info_table">
+        <tr th:each="item : ${tags.tags}">
+            <td th:text="${item}"></td>
+            <td><a th:href="@{'/catalog/manifest/' + ${tags.name} + '/' + ${item}}">Manifest</a></td>
+            <td><a th:href="@{'/catalog/tags/delete/' + ${tags.name} + '/' + ${item}}" class="delete_tag">Delete</a></td>
+        </tr>
+    </table>
+    </div>
+
+    <div th:if="${error}" th:text="${'Connection error: ' + error}" class="error_box"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<body>
+<div layout:fragment="content">
+    <h1>Connection test</h1>
+    <div class="result_box" th:unless="${error}">
+        Successfully connected!
+    </div>
+    <div th:if="${error}" th:text="${'Connection error: ' + error}" class="error_box">
+    </div>
+    <ul class="bottom_menu">
+        <li><a th:href="@{/}">Home</a></li>
+    </ul>
+</div>
+</body>
+</html>

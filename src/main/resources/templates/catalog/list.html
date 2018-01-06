@@ -1,0 +1,22 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<body>
+<div layout:fragment="content">
+    <h1>Repository list</h1>
+    <div class="success" th:unless="${error}">
+    <table class="info_table">
+        <tr th:each="item : ${repositories.repositories}">
+            <td th:text="${item}"></td>
+            <td><a href="" th:href="@{'/catalog/tags/' + ${item}}">Tags</a></td>
+        </tr>
+    </table>
+
+    <ul class="bottom_menu">
+        <li><a th:href="@{'/catalog/list'}">First</a></li>
+        <li><a th:if="${repositories.repositories.size()>0}" th:href="@{'/catalog/list/' + ${repositories.repositories[repositories.repositories.size()-1]}}">Next</a></li>
+    </ul>
+    </div>
+
+    <div th:if="${error}" th:text="${'Connection error: ' + error}" class="error_box"></div>
+</div>
+</body>
+</html>

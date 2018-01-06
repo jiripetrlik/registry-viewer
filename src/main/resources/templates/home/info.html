@@ -1,0 +1,24 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<body>
+<div layout:fragment="content">
+    <h1>Connected to registry</h1>
+    <table class="info_table">
+        <tr>
+            <td>Registry URL</td>
+            <td th:text="${info.registryConnectionSettings.url}"></td>
+        </tr>
+        <tr>
+            <td>Use authentication</td>
+            <td th:text="${info.registryConnectionSettings.useAuthentication}"></td>
+        </tr>
+        <tr th:if="${info.registryConnectionSettings.useAuthentication}">
+            <td>Username</td>
+            <td th:text="${info.registryConnectionSettings.username}"></td>
+        </tr>
+    </table>
+    <ul class="bottom_menu">
+        <li><a th:href="@{/test}">Test connection</a></li>
+    </ul>
+</div>
+</body>
+</html>

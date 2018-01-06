@@ -1,0 +1,39 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<body>
+<div layout:fragment="content">
+    <h1>Connect to Docker registry</h1>
+    <form action="#" th:action="@{/}" th:object="${settings}" method="post">
+        <table id="connect_form">
+            <tr>
+                <td>URL: </td>
+                <td><input type="text" th:field="*{url}"/></td>
+                <td th:if="${#fields.hasErrors('url')}" th:errors="*{url}" class="formvalidation"></td>
+            </tr>
+            <tr>
+                <td>Trust insecure registry: </td>
+                <td><input type="checkbox" th:field="*{insecure}"/></td>
+                <td th:if="${#fields.hasErrors('insecure')}" th:errors="*{insecure}" class="formvalidation"></td>
+            </tr>
+            <tr>
+                <td>Use authentication: </td>
+                <td><input type="checkbox" th:field="*{useAuthentication}"/></td>
+                <td th:if="${#fields.hasErrors('useAuthentication')}" th:errors="*{useAuthentication}" class="formvalidation"></td>
+            </tr>
+            <tr>
+                <td>Username: </td>
+                <td><input type="text" th:field="*{username}"/></td>
+                <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="formvalidation"></td>
+            </tr>
+            <tr>
+                <td>Password: </td>
+                <td><input type="password" th:field="*{password}"/></td>
+                <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="formvalidation"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Connect"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>
