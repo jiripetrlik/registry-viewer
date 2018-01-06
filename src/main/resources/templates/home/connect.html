@@ -2,8 +2,8 @@
 <body>
 <div layout:fragment="content">
     <h1>Connect to Docker registry</h1>
-    <form action="#" th:action="@{/}" th:object="${settings}" method="post">
-        <table id="connect_form">
+    <form action="#" th:action="@{/}" th:object="${settings}" method="post" id="connect_form">
+        <table id="connect_form_table">
             <tr>
                 <td>URL: </td>
                 <td><input type="text" th:field="*{url}"/></td>
@@ -16,17 +16,17 @@
             </tr>
             <tr>
                 <td>Use authentication: </td>
-                <td><input type="checkbox" th:field="*{useAuthentication}"/></td>
+                <td><input id="use_authentication_button" type="checkbox" th:field="*{useAuthentication}"/></td>
                 <td th:if="${#fields.hasErrors('useAuthentication')}" th:errors="*{useAuthentication}" class="formvalidation"></td>
             </tr>
             <tr>
                 <td>Username: </td>
-                <td><input type="text" th:field="*{username}"/></td>
+                <td><input id="username_field" type="text" th:field="*{username}" disabled="disabled"/></td>
                 <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="formvalidation"></td>
             </tr>
             <tr>
                 <td>Password: </td>
-                <td><input type="password" th:field="*{password}"/></td>
+                <td><input id="password_field" type="password" th:field="*{password}" disabled="disabled"/></td>
                 <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="formvalidation"></td>
             </tr>
             <tr>

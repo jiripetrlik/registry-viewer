@@ -64,7 +64,7 @@ ul.bottom_menu li {
     padding-right: 10px;
 }
 
-#connect_form {
+#connect_form_table {
     margin-left:auto;
     margin-right:auto;
     padding: 20px;
@@ -72,7 +72,7 @@ ul.bottom_menu li {
     border-width: thin;
 }
 
-#connect_form input[type="submit"] {
+#connect_form_table input[type="submit"] {
     display: block;
     margin-left:auto;
     margin-right:auto;

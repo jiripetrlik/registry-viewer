@@ -53,4 +53,15 @@ $( ".delete_tag" ).on( "click", function( event ) {
       }
     });
 } );
+
+$( "#use_authentication_button" ).change(function() {
+	if ($( "#use_authentication_button" ).is(':checked')) {
+		$( "#username_field" ).removeAttr("disabled");
+		$( "#password_field" ).removeAttr("disabled");
+	} else {
+		$( "#username_field" ).attr("disabled", "disabled");
+		$( "#password_field" ).attr("disabled", "disabled");
+	}
+});
+
 });
