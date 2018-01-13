@@ -15,10 +15,10 @@ public class RegistryConnectionSettings {
     @NotNull
     private boolean useAuthentication;
 
-    @NotNull
+    @Size(min = 1)
     private String username;
 
-    @NotNull
+    @Size(min = 1)
     private String password;
 
     public String getUrl() {

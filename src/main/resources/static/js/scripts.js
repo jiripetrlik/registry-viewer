@@ -24,6 +24,16 @@ function displayConnectionErrorDialog(error) {
 	});
 }
 
+function loginFormAuthenticationCheckboxes() {
+	if ($( "#use_authentication_button" ).is(':checked')) {
+		$( "#username_field[disabled='disabled']" ).removeAttr("disabled");
+		$( "#password_field[disabled='disabled']" ).removeAttr("disabled");
+	} else {
+		$( "#username_field:not([disabled='disabled'])" ).attr("disabled", "disabled");
+		$( "#password_field:not([disabled='disabled'])" ).attr("disabled", "disabled");
+	}
+}
+
 $( document ).ready(function() {
 $( "a.disconnect" ).on( "click", function( event ) {
     var $self = $(this);
@@ -81,13 +91,9 @@ $( ".delete_tag" ).on( "click", function( event ) {
 } );
 
 $( "#use_authentication_button" ).change(function() {
-	if ($( "#use_authentication_button" ).is(':checked')) {
-		$( "#username_field" ).removeAttr("disabled");
-		$( "#password_field" ).removeAttr("disabled");
-	} else {
-		$( "#username_field" ).attr("disabled", "disabled");
-		$( "#password_field" ).attr("disabled", "disabled");
-	}
+	loginFormAuthenticationCheckboxes();
 });
 
+
+loginFormAuthenticationCheckboxes();
 });
