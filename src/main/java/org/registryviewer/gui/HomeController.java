@@ -27,6 +27,12 @@ public class HomeController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model) {
         if (connectorService.isInitialized()) {
+            try {
+                connectorService.getRegistryConnector().touch();
+            } catch (RuntimeException e) {
+                model.addAttribute("error", e.getMessage());
+            }
+
             logger.info("Page with information about connection was displayed");
             model.addAttribute("info", connectorService.getRegistryConnector());
             return TEMPLATE_FOLDER + "/info";

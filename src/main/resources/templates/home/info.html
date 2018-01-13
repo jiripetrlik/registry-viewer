@@ -19,6 +19,11 @@
     <ul class="bottom_menu">
         <li><a th:href="@{/test}">Test connection</a></li>
     </ul>
+    
+    <script th:if="${error}" type="text/javascript" th:inline="javascript">
+		var error = /*[[${error}]]*/ null;
+		displayConnectionErrorDialog(error);
+	</script>
 </div>
 </body>
 </html>

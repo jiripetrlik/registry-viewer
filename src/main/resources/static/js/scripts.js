@@ -1,3 +1,29 @@
+function displayConnectionErrorDialog(error) {
+	$( document ).ready(function() {
+		$( "#dialog-confirm" ).attr("title", "Connection error");
+		$( "#dialog-confirm p").text(error);
+	
+		$( "#dialog-confirm" ).dialog({
+			resizable: false,
+			height: "auto",
+			width: 400,
+			modal: true,
+			my: "top",
+			at: "top",
+			of: window,
+			buttons: {
+				"Disconnect": function() {
+					window.location.href = "disconnect";
+					$( this ).dialog( "close" );
+				},
+				"Continue": function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+	});
+}
+
 $( document ).ready(function() {
 $( "a.disconnect" ).on( "click", function( event ) {
     var $self = $(this);
