@@ -66,7 +66,7 @@ public class CatalogController {
                             Model model) {
         connectorService.getRegistryConnector().deleteTag(repository, tag);
 
-        return "redirect: /";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "manifest/{repository}/{tag}")

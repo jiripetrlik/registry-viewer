@@ -80,7 +80,8 @@ $( ".delete_tag" ).on( "click", function( event ) {
         at: "top",
         of: window,
         buttons: {
-            "Delete all items": function() {
+            "Delete": function() {
+            window.location.href = $self.attr('href');
             $( this ).dialog( "close" );
         },
             Cancel: function() {
