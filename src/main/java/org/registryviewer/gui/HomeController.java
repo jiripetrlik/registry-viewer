@@ -1,10 +1,12 @@
 package org.registryviewer.gui;
 
+import org.registryviewer.RegistryConfigurationProperties;
 import org.registryviewer.connector.RegistryConnectionSettings;
 import org.registryviewer.service.ConnectorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +20,9 @@ import javax.validation.Valid;
 public class HomeController {
     private static final String CONTROLLER_URL = "/";
     private static final String TEMPLATE_FOLDER = "home";
+
+    @Autowired
+    RegistryConfigurationProperties registryConfigurationProperties;
 
     @Autowired
     private ConnectorService connectorService;
@@ -35,12 +40,21 @@ public class HomeController {
 
             logger.info("Page with information about connection was displayed");
             model.addAttribute("info", connectorService.getRegistryConnector());
+
             return TEMPLATE_FOLDER + "/info";
         } else {
-            logger.info("Connection prompt was displayed");
-            model.addAttribute("settings", new RegistryConnectionSettings());
-            model.addAttribute("hideMenu", true);
-            return TEMPLATE_FOLDER + "/connect";
+            if (registryConfigurationProperties.getUrl() != null) {
+                RegistryConnectionSettings settings = loadConnectionSettingsFromParams();
+                connectorService.init(settings);
+
+                return "redirect:" + "/";
+            } else {
+                logger.info("Connection prompt was displayed");
+                model.addAttribute("settings", new RegistryConnectionSettings());
+                model.addAttribute("hideMenu", true);
+
+                return TEMPLATE_FOLDER + "/connect";
+            }
         }
     }
 
@@ -67,5 +81,24 @@ public class HomeController {
         connectorService.disconnect();
 
         return "redirect:" + "/";
+    }
+
+    private RegistryConnectionSettings loadConnectionSettingsFromParams() {
+        RegistryConnectionSettings registryConnectionSettings = new RegistryConnectionSettings();
+
+        registryConnectionSettings.setUrl(registryConfigurationProperties.getUrl());
+        registryConnectionSettings.setInsecure(registryConfigurationProperties.isInsecure());
+        if (registryConfigurationProperties.getUsername() != null) {
+            if (registryConfigurationProperties.getPassword() == null) {
+                throw new RuntimeException("Registry password (registry.password) parameter is not set");
+            }
+            registryConnectionSettings.setUseAuthentication(true);
+            registryConnectionSettings.setUsername(registryConfigurationProperties.getUsername());
+            registryConnectionSettings.setPassword(registryConfigurationProperties.getPassword());
+        } else {
+            registryConnectionSettings.setUseAuthentication(false);
+        }
+
+        return registryConnectionSettings;
     }
 }
