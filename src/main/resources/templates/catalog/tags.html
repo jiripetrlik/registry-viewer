@@ -4,6 +4,12 @@
     <h1>Tags list</h1>
     <div class="success" th:unless="${error}">
     <table th:if="${tags}"  class="info_table">
+        <tr>
+            <th>Tag</th>
+            <th>Show</th>
+            <th>Delete tag</th>
+        </tr>
+
         <tr th:each="item : ${tags.tags}">
             <td th:text="${item}"></td>
             <td><a th:href="@{'/catalog/manifest/' + ${tags.name} + '/' + ${item}}">Manifest</a></td>

@@ -4,9 +4,14 @@
     <h1>Repository list</h1>
     <div class="success" th:unless="${error}">
     <table class="info_table">
+        <tr>
+            <th>Repository</th>
+            <th>Tags</th>
+        </tr>
+
         <tr th:each="item : ${repositories.repositories}">
             <td th:text="${item}"></td>
-            <td><a href="" th:href="@{'/catalog/tags/' + ${item}}">Tags</a></td>
+            <td><a href="" th:href="@{'/catalog/tags/' + ${item}}">View tags</a></td>
         </tr>
     </table>
 
