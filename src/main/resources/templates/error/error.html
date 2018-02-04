@@ -1,0 +1,12 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<body>
+<div layout:fragment="content">
+    <h1>Error processing request</h1>
+    <p class="exception">
+        Error processing request. See logs for details.
+        <br/>
+        <a th:href="@{/}">Main page</a>
+    </p>
+</div>
+</body>
+</html>
