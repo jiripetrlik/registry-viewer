@@ -35,6 +35,7 @@ public class HomeController {
             try {
                 connectorService.getRegistryConnector().touch();
             } catch (RuntimeException e) {
+                logger.error("Error testing registry connection {}", e);
                 model.addAttribute("error", e.getMessage());
             }
 
@@ -46,6 +47,7 @@ public class HomeController {
             if (registryConfigurationProperties.getUrl() != null) {
                 RegistryConnectionSettings settings = loadConnectionSettingsFromParams();
                 connectorService.init(settings);
+                logger.info("Connection to {} was initialized using configuration properties", settings.getUrl());
 
                 return "redirect:" + "/";
             } else {
@@ -78,6 +80,7 @@ public class HomeController {
 
     @RequestMapping(value = "/disconnect", method = RequestMethod.GET)
     public String disconnect() {
+        logger.info("Connection was closed");
         connectorService.disconnect();
 
         return "redirect:" + "/";
@@ -99,6 +102,8 @@ public class HomeController {
             registryConnectionSettings.setUseAuthentication(false);
         }
 
+        logger.info("Connection settings was loaded from configuration properties. Url={}",
+                registryConnectionSettings.getUrl());
         return registryConnectionSettings;
     }
 }

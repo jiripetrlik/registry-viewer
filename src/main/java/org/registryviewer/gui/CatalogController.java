@@ -4,6 +4,8 @@ import org.registryviewer.connector.model.Manifest;
 import org.registryviewer.connector.model.Repositories;
 import org.registryviewer.connector.model.Tags;
 import org.registryviewer.service.ConnectorService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,15 +26,19 @@ public class CatalogController {
     @Autowired
     private ConnectorService connectorService;
 
+    private static final Logger logger = LoggerFactory.getLogger(CatalogController.class);
+
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String list(Model model) {
         try {
             Repositories repositories = connectorService.getRegistryConnector().listRepositories(ITEMS_PER_PAGE);
             model.addAttribute("repositories", repositories);
         } catch (Exception e) {
+            logger.error("Error loading list of repositories: {}", e);
             model.addAttribute("error", e.getMessage());
         }
 
+        logger.info("List of repositories was displayed");
         return TEMPLATE_FOLDER + "/list";
     }
 
@@ -42,9 +48,11 @@ public class CatalogController {
             Repositories repositories = connectorService.getRegistryConnector().listRepositories(ITEMS_PER_PAGE, last);
             model.addAttribute("repositories", repositories);
         } catch (Exception e) {
+            logger.error("Error loading list of repositories: {}", e);
             model.addAttribute("error", e.getMessage());
         }
 
+        logger.info("List of repositories was displayed");
         return TEMPLATE_FOLDER + "/list";
     }
 
@@ -55,9 +63,11 @@ public class CatalogController {
             tags.setTags(tags.getTags().stream().sorted().collect(Collectors.toList()));
             model.addAttribute("tags", tags);
         } catch (Exception e) {
+            logger.error("Error loading tags for repository {}, exception: {}", repository, e);
             model.addAttribute("error", e.getMessage());
         }
 
+        logger.info("List of tags for repository {} was displayed", repository);
         return TEMPLATE_FOLDER + "/tags";
     }
 
@@ -66,6 +76,7 @@ public class CatalogController {
                             Model model) {
         connectorService.getRegistryConnector().deleteTag(repository, tag);
 
+        logger.info("Tag {} from repository {} was deleted", tag, repository);
         return "redirect:/";
     }
 
@@ -75,9 +86,11 @@ public class CatalogController {
             Manifest manifest = connectorService.getRegistryConnector().manifest(repository, tag);
             model.addAttribute("manifest", manifest);
         } catch (Exception e) {
+            logger.error("Error loading manifest for tag {} in repository {}", tag, repository);
             model.addAttribute("error", e.getMessage());
         }
 
+        logger.info("Manifest was displayed for tag {} in repository {}", tag, repository);
         return TEMPLATE_FOLDER + "/detail";
     }
 }
