@@ -14,6 +14,7 @@
         <spring.boot.version>1.5.9.RELEASE</spring.boot.version>
         <thymeleaf.layout.version>1.3.1</thymeleaf.layout.version>
         <jackson.version>2.9.2</jackson.version>
+        <xstream.version>1.2.2</xstream.version>
         <jquery.version>3.2.1</jquery.version>
         <jquery.ui.version>1.12.1</jquery.ui.version>
         <logback.version>1.2.1</logback.version>
@@ -44,10 +45,14 @@
             <artifactId>jackson-core</artifactId>
             <version>${jackson.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>${xstream.version}</version>
         </dependency>
 
         <!-- JavaScript libraries -->
@@ -66,6 +71,21 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
