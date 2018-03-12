@@ -1,0 +1,22 @@
+<list>
+    <item>
+        <from>.*Connection refused.*</from>
+        <to>Connection refused by remote host</to>
+    </item>
+    <item>
+        <from>.*The server failed to respond with a valid HTTP response.*</from>
+        <to>The server failed to respond with a valid HTTP response. Try to use https protocol</to>
+    </item>
+    <item>
+        <from>.*unable to find valid certification path to requested target.*</from>
+        <to>Invalid SSL certificate. You can use 'Trust insecure registry' option (potentialy dangerous).</to>
+    </item>
+    <item>
+        <from>.*Unauthorized.*</from>
+        <to>Unauthorized - Use the authentication and provide correct username and password</to>
+    </item>
+    <item>
+        <from>.*Method Not Allowed.*</from>
+        <to>Operation is not allowed. Check your registry settings</to>
+    </item>
+</list>

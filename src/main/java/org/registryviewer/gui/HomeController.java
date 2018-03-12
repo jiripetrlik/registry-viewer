@@ -3,6 +3,7 @@ package org.registryviewer.gui;
 import org.registryviewer.RegistryConfigurationProperties;
 import org.registryviewer.connector.RegistryConnectionSettings;
 import org.registryviewer.service.ConnectorService;
+import org.registryviewer.service.KnownExceptionMessagesTranslatorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class HomeController {
     @Autowired
     private ConnectorService connectorService;
 
+    @Autowired
+    private KnownExceptionMessagesTranslatorService messagesTranslatorService;
+
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -36,7 +40,7 @@ public class HomeController {
                 connectorService.getRegistryConnector().touch();
             } catch (RuntimeException e) {
                 logger.error("Error testing registry connection {}", e);
-                model.addAttribute("error", e.getMessage());
+                model.addAttribute("error", messagesTranslatorService.translate(e));
             }
 
             logger.info("Page with information about connection was displayed");

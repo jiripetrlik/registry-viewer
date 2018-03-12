@@ -4,6 +4,7 @@ import org.registryviewer.connector.model.Manifest;
 import org.registryviewer.connector.model.Repositories;
 import org.registryviewer.connector.model.Tags;
 import org.registryviewer.service.ConnectorService;
+import org.registryviewer.service.KnownExceptionMessagesTranslatorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class CatalogController {
     @Autowired
     private ConnectorService connectorService;
 
+    @Autowired
+    private KnownExceptionMessagesTranslatorService messagesTranslatorService;
+
     private static final Logger logger = LoggerFactory.getLogger(CatalogController.class);
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
@@ -35,7 +39,7 @@ public class CatalogController {
             model.addAttribute("repositories", repositories);
         } catch (Exception e) {
             logger.error("Error loading list of repositories: {}", e);
-            model.addAttribute("error", e.getMessage());
+            model.addAttribute("error", messagesTranslatorService.translate(e));
         }
 
         logger.info("List of repositories was displayed");
@@ -49,7 +53,7 @@ public class CatalogController {
             model.addAttribute("repositories", repositories);
         } catch (Exception e) {
             logger.error("Error loading list of repositories: {}", e);
-            model.addAttribute("error", e.getMessage());
+            model.addAttribute("error", messagesTranslatorService.translate(e));
         }
 
         logger.info("List of repositories was displayed");
@@ -60,11 +64,13 @@ public class CatalogController {
     public String tags(@PathVariable("repository") String repository, Model model) {
         try {
             Tags tags = connectorService.getRegistryConnector().listTags(repository);
-            tags.setTags(tags.getTags().stream().sorted().collect(Collectors.toList()));
+            if (tags != null && tags.getTags() !=null) {
+                tags.setTags(tags.getTags().stream().sorted().collect(Collectors.toList()));
+            }
             model.addAttribute("tags", tags);
         } catch (Exception e) {
             logger.error("Error loading tags for repository {}, exception: {}", repository, e);
-            model.addAttribute("error", e.getMessage());
+            model.addAttribute("error", messagesTranslatorService.translate(e));
         }
 
         logger.info("List of tags for repository {} was displayed", repository);
@@ -87,7 +93,7 @@ public class CatalogController {
             model.addAttribute("manifest", manifest);
         } catch (Exception e) {
             logger.error("Error loading manifest for tag {} in repository {}", tag, repository);
-            model.addAttribute("error", e.getMessage());
+            model.addAttribute("error", messagesTranslatorService.translate(e));
         }
 
         logger.info("Manifest was displayed for tag {} in repository {}", tag, repository);

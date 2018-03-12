@@ -1,6 +1,7 @@
 package org.registryviewer.gui;
 
 import org.registryviewer.service.ConnectorService;
+import org.registryviewer.service.KnownExceptionMessagesTranslatorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class ConnectionTestController {
     @Autowired
     private ConnectorService connectorService;
 
+    @Autowired
+    private KnownExceptionMessagesTranslatorService messagesTranslatorService;
+
     @RequestMapping(method = RequestMethod.GET)
     private String testConnection(Model model) {
         if (!connectorService.isInitialized()) {
@@ -37,7 +41,7 @@ public class ConnectionTestController {
         } catch (RuntimeException e) {
             logger.error("Error in connection to registry {}, {}",
                     connectorService.getRegistryConnector().getRegistryConnectionSettings().getUrl(), e);
-            model.addAttribute("error", e.getMessage());
+            model.addAttribute("error", messagesTranslatorService.translate(e));
         }
 
         return TEMPLATE_FOLDER + "/result";

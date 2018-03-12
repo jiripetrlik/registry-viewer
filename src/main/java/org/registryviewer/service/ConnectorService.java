@@ -26,6 +26,10 @@ public class ConnectorService {
         return registryConnector.get();
     }
 
+    public void setRegistryConnector(RegistryConnector registryConnector) {
+        this.registryConnector = Optional.of(registryConnector);
+    }
+
     public synchronized void disconnect() {
         if (registryConnector.isPresent()) {
             registryConnector.get().disconnect();
