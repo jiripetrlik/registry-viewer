@@ -1,0 +1,113 @@
+# Registry viewer
+
+Registry Viewer is web application for browsing Docker registries.
+It uses version 2 of registry API and allows both authenticated and
+non authenticated login. By default the application displays form for
+registry url and authentication settings. However, it is possible to
+specify the login information at startup using environment properties.
+
+## Instalation and configuration
+
+### Requirements
+
+Registry viewer is Spring boot application which requires Java 8 to
+run. To build this project the following software need to
+be installed on your machine:
+
+* Openjdk 1.8
+* Maven 3.3.9 or higher
+
+### Run and debug using Maven
+
+Registry viewer is Spring boot application and can be run simply
+using **spring-boot-maven-plugin**:
+
+```
+mvn spring-boot:run
+```
+
+Application listens on port 8080 by default. Port and other parameters
+can be changed using Spring boot configuration options. The list with
+these options can be found in
+[Spring documentation](https://docs.spring.io/spring-boot/docs/1.5.10.RELEASE/reference/htmlsingle/#boot-features-customizing-embedded-containers).
+
+It is possible to enable remote debugger which listens on port 5005:
+
+```
+mvn spring-boot:run
+  -Drun.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"
+```
+
+### Build
+
+To build the application run:
+
+```
+mvn clean install
+```
+
+It will create
+executable jar **registry-viewer-version.jar** in the **target**
+directory. The file will contain embeded Tomcat servlet container
+and all libraries which are required by Registry viewer application
+to run.
+
+### Run
+
+To start the application use:
+```
+java -jar registry-viewer-version.jar
+```
+
+It will run Tomcat container and deploy the application to it. You can
+use the following parameters for configuration.
+
+| Name | Description
+| ------ | ------------- |
+| registry.url | Url of target registry |
+| registry.username | Username for target registry |
+| registry.password | Password for target registry |
+| registry.insecure | Allow insecure connection to remote registry |
+
+For example:
+
+```
+java -Dregistry.url=http://localhost:5000 -jar registry-viewer-1.0-SNAPSHOT.jar
+```
+
+## Docker image
+
+Registry Viewer can be run inside the Docker container. You can use
+the Dockerfile in the project parent directory to build a Docker image.
+Image is built by running following command:
+
+```
+mvn clean package dockerfile:build
+```
+
+It needs access to the Docker daemon. See Docker documentation
+which describes how to enable access to
+[Docker daemon for non root user](https://docs.docker.com/install/linux/linux-postinstall/).
+Final image is called **registry-viewer**. You can start docker container
+using:
+
+```
+docker run --name registry-viewer-container -p 8080:8080 registry-viewer
+```
+
+You can use the following parameters for configuration:
+
+| Name | Description
+| ------ | ------------- |
+| registry_url | Url of target registry |
+| registry_username | Username for target registry |
+| registry_password | Password for target registry |
+| registry_insecure | Allow insecure connection to remote registry |
+
+Image of the Registry Viewer can be also found in central [Docker hub
+repository](https://hub.docker.com/r/jiripetrlik/registry-viewer/).
+
+## License
+
+Registry Viewer is open source software, released under the
+[Apache Software License 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
