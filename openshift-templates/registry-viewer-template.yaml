@@ -1,0 +1,115 @@
+---
+kind: Template
+apiVersion: v1
+metadata:
+  name: registry-viewer
+  annotations:
+    name: registry-viewer
+    description: Application template for Registry Viewer
+message: A new Registry Viewer application was created.
+
+parameters:
+- name: APPLICATION_NAME
+  displayName: Application Name
+  description: The name for the application.
+  value: rviewer
+  required: true
+- name: REGISTRY_VIEWER_HOSTNAME
+  displayName: Registry Viewer hostname
+  description: Custom hostname for registry viewer route. Leave blank for default.
+  value: ''
+  required: false
+- name: REGISTRY_URL
+  displayName: Registry URL
+  description: Url of target registry
+  required: false
+- name: REGISTRY_USERNAME
+  displayName: Registry username
+  description: Username for target registry
+  required: false
+- name: REGISTRY_PASSWORD
+  displayName: Registry password
+  description: Password for target registry
+  required: false
+- name: REGISTRY_INSECURE
+  displayName: Allow insecure registry
+  description: Allow insecure connection to remote registry
+  value: "false"
+  required: true
+
+objects:
+- kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    name: "${APPLICATION_NAME}-registry-viewer"
+    labels:
+      application: "${APPLICATION_NAME}"
+  spec:
+    strategy:
+      type: Recreate
+    replicas: 1
+    selector:
+      deploymentConfig: "${APPLICATION_NAME}-registry-viewer"
+    template:
+      metadata:
+        name: "${APPLICATION_NAME}-registry-viewer"
+        labels:
+          application: "${APPLICATION_NAME}"
+          deploymentConfig: "${APPLICATION_NAME}-registry-viewer"
+      spec:
+        containers:
+        - name: "${APPLICATION_NAME}-registry-viewer"
+          image: "jiripetrlik/registry-viewer"
+          imagePullPolicy: Always
+          env:
+          - name: "REGISTRY_URL"
+            value: "${REGISTRY_URL}"
+          - name: "REGISTRY_USERNAME"
+            value: "${REGISTRY_USERNAME}"
+          - name: "REGISTRY_PASSWORD"
+            value: "${REGISTRY_PASSWORD}"
+          - name: "REGISTRY_INSECURE"
+            value: "${REGISTRY_INSECURE}"
+          ports:
+          - name: "http"
+            containerPort: 8080
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+              - "/bin/sh"
+              - "-c"
+              - "wget -qO- http://localhost:8080 > /dev/null"
+          livenessProbe:
+            exec:
+              command:
+              - "/bin/sh"
+              - "-c"
+              - "wget -qO- http://localhost:8080 > /dev/null"
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: "${APPLICATION_NAME}-registry-viewer"
+    labels:
+      application: "${APPLICATION_NAME}"
+  spec:
+    ports:
+    - name: "http"
+      port: 8080
+      targetPort: 8080
+    selector:
+      deploymentConfig: "${APPLICATION_NAME}-registry-viewer"
+- kind: Route
+  apiVersion: v1
+  id: "${APPLICATION_NAME}-registry-viewer"
+  metadata:
+    name: "${APPLICATION_NAME}-registry-viewer"
+    labels:
+      application: "${APPLICATION_NAME}"
+      deploymentConfig: "${APPLICATION_NAME}-registry-viewer"
+  spec:
+    host: "${REGISTRY_VIEWER_HOSTNAME}"
+    to:
+      name: "${APPLICATION_NAME}-registry-viewer"
+    port:
+      targetPort: "http"

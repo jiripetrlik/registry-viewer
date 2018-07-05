@@ -98,9 +98,8 @@ List of additional parameters:
 
 ### Build Docker image
 
-Docker image is built using the Dockerfile in the project parent directory.
-Image is built by running following command:
-
+Docker image for Registry Viewer is built using the Dockerfile in the
+project parent directory. It can be built by running following command:
 ```
 mvn clean package dockerfile:build
 ```
@@ -109,6 +108,42 @@ It requires access to the Docker daemon. See Docker documentation
 which describes how to enable access to
 [Docker daemon for non root user](https://docs.docker.com/install/linux/linux-postinstall/).
 Final image is called **registry-viewer**.
+
+## Openshift
+Openshift applications are often deployed using Openshift templates,
+which are **.yaml** files and describe items which need to be created to run
+the application. Openshift template for Registry Viewer is in file
+`openshift-templates/registry-viewer-template.yaml`. Template parameters
+are the same as the parameters for Docker. To run Registry Viewer use following
+commands:
+
+```
+# Create template in current project
+oc create -f openshift-templates/registry-viewer-template.yaml
+
+# Create application using template
+oc new-app --template=registry-viewer
+```
+
+In the same folder, there are also two templates for deployng Docker registry.
+To deploy ephemeral Docker registry run:
+
+```
+oc create -f openshift-templates/registry-template.yaml
+oc new-app --template=docker-registry-ephemeral
+```
+
+To deploy Docker registry with persistent volume run:
+
+```
+oc create -f openshift-templates/registry-template-persistent.yaml
+oc new-app --template=docker-registry-persistent
+```
+
+List of additional template parameters can be shown by:
+```
+oc process --parameters template-name
+```
 
 ## License
 

@@ -61,7 +61,7 @@ public class HomeController {
 
             return TEMPLATE_FOLDER + "/info";
         } else {
-            if (registryConfigurationProperties.getUrl() != null) {
+            if (notNullOrEmpty(registryConfigurationProperties.getUrl())) {
                 RegistryConnectionSettings settings = loadConnectionSettingsFromParams();
                 connectorService.init(settings);
                 logger.info("Connection to {} was initialized using configuration properties", settings.getUrl());
@@ -108,7 +108,7 @@ public class HomeController {
 
         registryConnectionSettings.setUrl(registryConfigurationProperties.getUrl());
         registryConnectionSettings.setInsecure(registryConfigurationProperties.isInsecure());
-        if (registryConfigurationProperties.getUsername() != null) {
+        if (notNullOrEmpty(registryConfigurationProperties.getUsername())) {
             if (registryConfigurationProperties.getPassword() == null) {
                 throw new RuntimeException("Registry password (registry.password) parameter is not set");
             }
@@ -122,5 +122,13 @@ public class HomeController {
         logger.info("Connection settings was loaded from configuration properties. Url={}",
                 registryConnectionSettings.getUrl());
         return registryConnectionSettings;
+    }
+
+    private boolean notNullOrEmpty(String string) {
+        if (string == null || string.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

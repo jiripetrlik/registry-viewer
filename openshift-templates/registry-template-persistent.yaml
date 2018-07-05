@@ -1,0 +1,113 @@
+---
+kind: Template
+apiVersion: v1
+metadata:
+  name: docker-registry-persistent
+  annotations:
+    name: docker-registry-persistent
+    description: Application template for persistent Docker registry
+message: A new persistent Docker registries have been created.
+
+parameters:
+- name: APPLICATION_NAME
+  displayName: Application Name
+  description: The name for the application.
+  value: test
+  required: true
+- name: DOCKER_REGISTRY_HOSTNAME
+  displayName: Docker registry custom hostname
+  description: Custom hostname for docker registry route. Leave blank for default.
+  value: ''
+  required: false
+- name: DOCKER_REGISTRY_VOLUME_CAPACITY
+  displayName: Docker registry volume capacity
+  description: Size of the persistent storage for Docker registry volume
+  value: "1Gi"
+  required: true
+
+objects:
+- kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: "${APPLICATION_NAME}-docker-registry-claim"
+    labels:
+      application: "${APPLICATION_NAME}"
+  spec:
+    accessModes:
+    - ReadWriteMany
+    resources:
+      requests:
+        storage: "${DOCKER_REGISTRY_VOLUME_CAPACITY}"
+- kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    name: "${APPLICATION_NAME}-docker-registry"
+    labels:
+      application: "${APPLICATION_NAME}"
+  spec:
+    strategy:
+      type: Recreate
+    replicas: 1
+    selector:
+      deploymentConfig: "${APPLICATION_NAME}-docker-registry"
+    template:
+      metadata:
+        name: "${APPLICATION_NAME}-docker-registry"
+        labels:
+          application: "${APPLICATION_NAME}"
+          deploymentConfig: "${APPLICATION_NAME}-docker-registry"
+      spec:
+        containers:
+        - name: "${APPLICATION_NAME}-docker-registry"
+          image: "registry"
+          imagePullPolicy: Always
+          ports:
+          - name: "http"
+            containerPort: 5000
+            protocol: TCP
+          volumeMounts:
+          - name: "${APPLICATION_NAME}-docker-registry-pvol"
+            mountPath: "/var/lib/registry"
+          readinessProbe:
+            exec:
+              command:
+              - "/bin/sh"
+              - "-c"
+              - "wget -qO- http://localhost:5000/v2 > /dev/null"
+          livenessProbe:
+            exec:
+              command:
+              - "/bin/sh"
+              - "-c"
+              - "wget -qO- http://localhost:5000/v2 > /dev/null"
+        volumes:
+        - name: "${APPLICATION_NAME}-docker-registry-pvol"
+          persistentVolumeClaim:
+            claimName: "${APPLICATION_NAME}-docker-registry-claim"
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: "${APPLICATION_NAME}-docker-registry"
+    labels:
+      application: "${APPLICATION_NAME}"
+  spec:
+    ports:
+    - name: "http"
+      port: 5000
+      targetPort: 5000
+    selector:
+      deploymentConfig: "${APPLICATION_NAME}-docker-registry"
+- kind: Route
+  apiVersion: v1
+  id: "${APPLICATION_NAME}-docker-registry"
+  metadata:
+    name: "${APPLICATION_NAME}-docker-registry"
+    labels:
+      application: "${APPLICATION_NAME}"
+      deploymentConfig: "${APPLICATION_NAME}-docker-registry"
+  spec:
+    host: "${DOCKER_REGISTRY_HOSTNAME}"
+    to:
+      name: "${APPLICATION_NAME}-docker-registry"
+    port:
+      targetPort: "http"
