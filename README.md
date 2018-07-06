@@ -1,7 +1,7 @@
 # Registry viewer
 
-Registry Viewer is web application for browsing Docker registries.
-It uses version 2 of registry API and allows both authenticated and
+Registry Viewer is a web application for browsing Docker registries.
+It uses version 2 of the registry API and allows both authenticated and
 non authenticated login. By default the application displays form for
 registry url and authentication settings. However, it is possible to
 specify the login information at startup using environment properties.
@@ -10,7 +10,7 @@ specify the login information at startup using environment properties.
 
 ### Requirements
 
-Registry viewer is Spring boot application which requires Java 8 to
+Registry viewer is a Spring boot application which requires Java 8 to
 run. To build this project the following software need to
 be installed on your machine:
 
@@ -75,27 +75,19 @@ For example:
 java -Dregistry.url=http://localhost:5000 -jar registry-viewer-1.0-SNAPSHOT.jar
 ```
 
-## Docker image
+## Docker
 
-Registry Viewer can be run inside the Docker container. You can use
-the Dockerfile in the project parent directory to build a Docker image.
-Image is built by running following command:
-
-```
-mvn clean package dockerfile:build
-```
-
-It needs access to the Docker daemon. See Docker documentation
-which describes how to enable access to
-[Docker daemon for non root user](https://docs.docker.com/install/linux/linux-postinstall/).
-Final image is called **registry-viewer**. You can start docker container
-using:
+### Install using Docker
+Registry Viewer can be run inside the Docker container
+and its image can be found in the central [Docker hub
+repository](https://hub.docker.com/r/jiripetrlik/registry-viewer/).
+Use following command to run Registry Viewer in Docker:
 
 ```
-docker run --name registry-viewer-container -p 8080:8080 registry-viewer
+docker run --name registry-viewer-container -p 8080:8080 jiripetrlik/registry-viewer
 ```
 
-You can use the following parameters for configuration:
+List of additional parameters:
 
 | Name | Description
 | ------ | ------------- |
@@ -104,8 +96,19 @@ You can use the following parameters for configuration:
 | registry_password | Password for target registry |
 | registry_insecure | Allow insecure connection to remote registry |
 
-Image of the Registry Viewer can be also found in central [Docker hub
-repository](https://hub.docker.com/r/jiripetrlik/registry-viewer/).
+### Build Docker image
+
+Docker image is built using the Dockerfile in the project parent directory.
+Image is built by running following command:
+
+```
+mvn clean package dockerfile:build
+```
+
+It requires access to the Docker daemon. See Docker documentation
+which describes how to enable access to
+[Docker daemon for non root user](https://docs.docker.com/install/linux/linux-postinstall/).
+Final image is called **registry-viewer**.
 
 ## License
 
