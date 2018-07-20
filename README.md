@@ -112,9 +112,9 @@ Final image is called **registry-viewer**.
 ## Openshift
 Openshift applications are often deployed using Openshift templates,
 which are **.yaml** files and describe items which need to be created to run
-the application. Openshift template for Registry Viewer is in file
+the application. Openshift template for Registry Viewer is in the file
 `openshift-templates/registry-viewer-template.yaml`. Template parameters
-are the same as the parameters for Docker. To run Registry Viewer use following
+are the same as the parameters for Docker. To run Registry Viewer use the following
 commands:
 
 ```
@@ -125,11 +125,12 @@ oc create -f openshift-templates/registry-viewer-template.yaml
 oc new-app --template=registry-viewer
 ```
 
-In the same folder, there are also two templates for deployng Docker registry.
+In the same folder, there are also two templates for deploying Docker registry.
 To deploy ephemeral Docker registry run:
 
 ```
 oc create -f openshift-templates/registry-template.yaml
+oc adm policy add-scc-to-user anyuid -z default # Ephemeral registry needs root user
 oc new-app --template=docker-registry-ephemeral
 ```
 
