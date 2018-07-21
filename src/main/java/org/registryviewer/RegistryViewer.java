@@ -27,6 +27,7 @@ public class RegistryViewer {
     private static final Logger logger = LoggerFactory.getLogger(RegistryViewer.class);
 
     public static void main(String[] args) throws Exception {
+        System.setProperty("org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH", "true");
         logger.debug("Starting application context");
         ApplicationContext applicationContext = SpringApplication.run(RegistryViewer.class);
         logger.debug("Application context was started");

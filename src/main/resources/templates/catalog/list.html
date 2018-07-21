@@ -11,13 +11,13 @@
 
         <tr th:each="item : ${repositories.repositories}">
             <td th:text="${item}"></td>
-            <td><a href="" th:href="@{'/catalog/tags/' + ${item}}">View tags</a></td>
+            <td><a href="" th:href="@{/catalog/tags/{/item}(item=${item})}">View tags</a></td>
         </tr>
     </table>
 
     <ul class="bottom_menu">
         <li><a th:href="@{'/catalog/list'}">First</a></li>
-        <li><a th:if="${repositories.repositories.size()>0}" th:href="@{'/catalog/list/' + ${repositories.repositories[repositories.repositories.size()-1]}}">Next</a></li>
+        <li><a th:if="${repositories.repositories.size()>0}" th:href="@{/catalog/list/{/repo}(repo=${repositories.repositories[repositories.repositories.size()-1]})}">Next</a></li>
     </ul>
     </div>
 

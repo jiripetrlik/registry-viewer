@@ -12,8 +12,8 @@
 
         <tr th:each="item : ${tags.tags}">
             <td th:text="${item}"></td>
-            <td><a th:href="@{'/catalog/manifest/' + ${tags.name} + '/' + ${item}}">Manifest</a></td>
-            <td><a th:href="@{'/catalog/tags/delete/' + ${tags.name} + '/' + ${item}}" class="delete_tag">Delete</a></td>
+            <td><a th:href="@{/catalog/manifest/{/name}/{/it}(name=${tags.name},it=${item})}">Manifest</a></td>
+            <td><a th:href="@{'/catalog/tags/delete/{/name}/{/it}(name=${tags.name},it=${item})}" class="delete_tag">Delete</a></td>
         </tr>
     </table>
     </div>
