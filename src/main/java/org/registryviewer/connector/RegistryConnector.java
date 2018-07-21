@@ -225,6 +225,6 @@ public class RegistryConnector {
         requestFactory.setHttpClient(httpClient);
 
         logger.debug("Rest template, which allows insecure connections, was created");
-        return restTemplateBuilder.requestFactory(requestFactory);
+        return restTemplateBuilder.requestFactory(() -> requestFactory);
     }
 }
