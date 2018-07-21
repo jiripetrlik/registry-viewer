@@ -47,6 +47,16 @@ objects:
   spec:
     strategy:
       type: Recreate
+    triggers:
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+        - "${APPLICATION_NAME}-registry-viewer"
+        from:
+          kind: ImageStreamTag
+          name: "registry-viewer:latest"
+    - type: ConfigChange
     replicas: 1
     selector:
       deploymentConfig: "${APPLICATION_NAME}-registry-viewer"
@@ -59,7 +69,7 @@ objects:
       spec:
         containers:
         - name: "${APPLICATION_NAME}-registry-viewer"
-          image: "jiripetrlik/registry-viewer"
+          image: "registry-viewer"
           imagePullPolicy: Always
           env:
           - name: "REGISTRY_URL"

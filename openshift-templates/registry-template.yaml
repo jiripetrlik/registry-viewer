@@ -30,6 +30,16 @@ objects:
   spec:
     strategy:
       type: Recreate
+    triggers:
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+        - "${APPLICATION_NAME}-docker-registry"
+        from:
+          kind: ImageStreamTag
+          name: "docker-registry:latest"
+    - type: ConfigChange
     replicas: 1
     selector:
       deploymentConfig: "${APPLICATION_NAME}-docker-registry"
@@ -42,7 +52,7 @@ objects:
       spec:
         containers:
         - name: "${APPLICATION_NAME}-docker-registry"
-          image: "registry"
+          image: "docker-registry"
           imagePullPolicy: Always
           ports:
           - name: "http"

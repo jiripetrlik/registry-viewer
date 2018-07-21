@@ -1,0 +1,20 @@
+kind: List
+apiVersion: v1
+metadata:
+  name: registry-image-stream
+  annotations:
+    description: ImageStream definition for registry
+items:
+- kind: ImageStream
+  apiVersion: v1
+  metadata:
+    name: docker-registry
+  spec:
+    tags:
+    - name: 'latest'
+      annotations:
+        description: Registry image
+        version: 'latest'
+      from:
+        kind: DockerImage
+        name: registry.hub.docker.com/library/registry:latest

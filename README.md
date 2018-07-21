@@ -118,6 +118,9 @@ are the same as the parameters for Docker. To run Registry Viewer use the follow
 commands:
 
 ```
+# Create image stream
+oc create -f openshift-templates/registry-viewer-image-stream.yaml
+
 # Create template in current project
 oc create -f openshift-templates/registry-viewer-template.yaml
 
@@ -129,6 +132,7 @@ In the same folder, there are also two templates for deploying Docker registry.
 To deploy ephemeral Docker registry run:
 
 ```
+oc create -f openshift-templates/registry-image-stream.yaml
 oc create -f openshift-templates/registry-template.yaml
 oc adm policy add-scc-to-user anyuid -z default # Ephemeral registry needs root user
 oc new-app --template=docker-registry-ephemeral
@@ -137,6 +141,7 @@ oc new-app --template=docker-registry-ephemeral
 To deploy Docker registry with persistent volume run:
 
 ```
+oc create -f openshift-templates/registry-image-stream.yaml
 oc create -f openshift-templates/registry-template-persistent.yaml
 oc new-app --template=docker-registry-persistent
 ```
