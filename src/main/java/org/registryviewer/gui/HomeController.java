@@ -78,8 +78,10 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public String connect(@Valid @ModelAttribute("settings") RegistryConnectionSettings settings, BindingResult bindingResult) {
+    public String connect(@Valid @ModelAttribute("settings") RegistryConnectionSettings settings, BindingResult bindingResult,
+                          Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("hideMenu", true);
             logger.info("Invalid values of connection settings were given");
             return TEMPLATE_FOLDER + "/connect";
         }
