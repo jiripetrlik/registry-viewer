@@ -65,7 +65,7 @@ public class CatalogControllerTest {
         Repositories repositories = new Repositories();
         repositories.setRepositories(Arrays.asList("repo1", "repo2"));
         RegistryConnector registryConnector = Mockito.mock(RegistryConnector.class);
-        Mockito.when(registryConnector.listRepositories(5)).thenReturn(repositories);
+        Mockito.when(registryConnector.listRepositories(20)).thenReturn(repositories);
         Mockito.when(connectorService.getRegistryConnector()).thenReturn(registryConnector);
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/catalog/list"))
@@ -77,7 +77,7 @@ public class CatalogControllerTest {
         Assertions.assertThat(content).contains("repo1");
         Assertions.assertThat(content).contains("repo2");
 
-        Mockito.verify(registryConnector, Mockito.atLeast(1)).listRepositories(5);
+        Mockito.verify(registryConnector, Mockito.atLeast(1)).listRepositories(20);
     }
 
     @Test
@@ -85,7 +85,7 @@ public class CatalogControllerTest {
         Repositories repositories = new Repositories();
         repositories.setRepositories(Arrays.asList("repo1", "repo2"));
         RegistryConnector registryConnector = Mockito.mock(RegistryConnector.class);
-        Mockito.when(registryConnector.listRepositories(5, "repoLast")).thenReturn(repositories);
+        Mockito.when(registryConnector.listRepositories(20, "repoLast")).thenReturn(repositories);
         Mockito.when(connectorService.getRegistryConnector()).thenReturn(registryConnector);
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/catalog/list/repoLast"))
@@ -97,7 +97,7 @@ public class CatalogControllerTest {
         Assertions.assertThat(content).contains("repo1");
         Assertions.assertThat(content).contains("repo2");
 
-        Mockito.verify(registryConnector, Mockito.atLeast(1)).listRepositories(5, "repoLast");
+        Mockito.verify(registryConnector, Mockito.atLeast(1)).listRepositories(20, "repoLast");
     }
 
     @Test
