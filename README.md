@@ -6,6 +6,8 @@ non authenticated login. By default the application displays form for
 registry url and authentication settings. However, it is possible to
 specify the login information at startup using environment properties.
 
+![screenshot](doc/screenshot.png)
+
 ## Instalation and configuration
 
 ### Requirements
