@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 @RequestMapping("catalog")
 public class CatalogController {
 
-    private static final int ITEMS_PER_PAGE = 5;
+    private static final int ITEMS_PER_PAGE = 20;
     private static final String CONTROLLER_URL = "/catalog";
     private static final String TEMPLATE_FOLDER = "catalog";
 
