@@ -1,0 +1,68 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: registry-viewer
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: registry-viewer
+      labels:
+        app: registry-viewer
+    spec:
+      containers:
+      - image: jiripetrlik/registry-viewer
+        name: registry-viewer
+        env:
+        - name: registry_url
+          valueFrom:
+            configMapKeyRef:
+              name: registry-viewer-config
+              key: registry_url
+              optional: true
+        - name: registry_username
+          valueFrom:
+            configMapKeyRef:
+              name: registry-viewer-config
+              key: registry_username
+              optional: true
+        - name: registry_password
+          valueFrom:
+            configMapKeyRef:
+              name: registry-viewer-config
+              key: registry_password
+              optional: true
+        - name: registry_insecure
+          valueFrom:
+            configMapKeyRef:
+              name: registry-viewer-config
+              key: registry_insecure
+              optional: true
+        ports:
+        - name: "http"
+          containerPort: 8080
+          protocol: TCP
+        readinessProbe:
+          exec:
+            command:
+            - "/bin/sh"
+            - "-c"
+            - "wget -qO- http://localhost:8080 > /dev/null"
+        livenessProbe:
+          exec:
+            command:
+            - "/bin/sh"
+            - "-c"
+            - "wget -qO- http://localhost:8080 > /dev/null"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registry-viewer
+spec:
+  ports:
+  - name: "http"
+    port: 80
+    targetPort: "http"
+  selector:
+    app: registry-viewer
