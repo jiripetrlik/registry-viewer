@@ -60,7 +60,7 @@ public class RegistryConnector {
         }
 
         if (registryConnectionSettings.isUseAuthentication()) {
-            restTemplateBuilder = restTemplateBuilder.basicAuthorization(registryConnectionSettings.getUsername(),
+            restTemplateBuilder = restTemplateBuilder.basicAuthentication(registryConnectionSettings.getUsername(),
                     registryConnectionSettings.getPassword());
         }
 
