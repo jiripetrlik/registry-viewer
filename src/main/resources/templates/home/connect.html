@@ -6,7 +6,7 @@
         <table id="connect_form_table">
             <tr>
                 <td>URL: </td>
-                <td><input type="text" th:field="*{url}"/></td>
+                <td><input type="text" th:field="*{url}" placeholder="https://registry-domain:5000"/></td>
                 <td th:if="${#fields.hasErrors('url')}" th:errors="*{url}" class="formvalidation"></td>
             </tr>
             <tr>
