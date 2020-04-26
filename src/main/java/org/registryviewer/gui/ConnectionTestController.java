@@ -49,7 +49,7 @@ public class ConnectionTestController {
 
         try {
             connectorService.getRegistryConnector().touch();
-            logger.info("Registry connection was successfully tested {}",
+            logger.debug("Registry connection was successfully tested {}",
                     connectorService.getRegistryConnector().getRegistryConnectionSettings().getUrl());
         } catch (RuntimeException e) {
             logger.error("Error in connection to registry {}, {}",

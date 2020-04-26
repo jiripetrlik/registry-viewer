@@ -55,7 +55,7 @@ public class CatalogController {
             model.addAttribute("error", messagesTranslatorService.translate(e));
         }
 
-        logger.info("List of repositories was displayed");
+        logger.debug("List of repositories was displayed");
         return TEMPLATE_FOLDER + "/list";
     }
 
@@ -69,7 +69,7 @@ public class CatalogController {
             model.addAttribute("error", messagesTranslatorService.translate(e));
         }
 
-        logger.info("List of repositories was displayed");
+        logger.debug("List of repositories was displayed");
         return TEMPLATE_FOLDER + "/list";
     }
 
@@ -86,7 +86,7 @@ public class CatalogController {
             model.addAttribute("error", messagesTranslatorService.translate(e));
         }
 
-        logger.info("List of tags for repository {} was displayed", repository);
+        logger.debug("List of tags for repository {} was displayed", repository);
         return TEMPLATE_FOLDER + "/tags";
     }
 
@@ -95,7 +95,7 @@ public class CatalogController {
                             Model model) {
         connectorService.getRegistryConnector().deleteTag(repository, tag);
 
-        logger.info("Tag {} from repository {} was deleted", tag, repository);
+        logger.debug("Tag {} from repository {} was deleted", tag, repository);
         return "redirect:/";
     }
 
@@ -109,7 +109,7 @@ public class CatalogController {
             model.addAttribute("error", messagesTranslatorService.translate(e));
         }
 
-        logger.info("Manifest was displayed for tag {} in repository {}", tag, repository);
+        logger.debug("Manifest was displayed for tag {} in repository {}", tag, repository);
         return TEMPLATE_FOLDER + "/detail";
     }
 }

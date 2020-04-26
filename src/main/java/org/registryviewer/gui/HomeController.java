@@ -56,7 +56,7 @@ public class HomeController {
                 model.addAttribute("error", messagesTranslatorService.translate(e));
             }
 
-            logger.info("Page with information about connection was displayed");
+            logger.debug("Page with information about connection was displayed");
             model.addAttribute("info", connectorService.getRegistryConnector());
 
             return TEMPLATE_FOLDER + "/info";
@@ -68,7 +68,7 @@ public class HomeController {
 
                 return "redirect:" + "/";
             } else {
-                logger.info("Connection prompt was displayed");
+                logger.debug("Connection prompt was displayed");
                 model.addAttribute("settings", new RegistryConnectionSettings());
                 model.addAttribute("hideMenu", true);
 
