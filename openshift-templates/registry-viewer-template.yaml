@@ -55,7 +55,7 @@ objects:
         - "${APPLICATION_NAME}-registry-viewer"
         from:
           kind: ImageStreamTag
-          name: "registry-viewer:latest"
+          name: "registry-viewer:v0.1"
     - type: ConfigChange
     replicas: 1
     selector:

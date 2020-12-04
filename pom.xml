@@ -6,7 +6,7 @@
 
     <groupId>org.registryviewer</groupId>
     <artifactId>registry-viewer</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
 
     <properties>
         <docker.image.name>registry-viewer</docker.image.name>

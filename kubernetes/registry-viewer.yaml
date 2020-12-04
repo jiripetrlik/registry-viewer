@@ -14,7 +14,7 @@ spec:
         app: registry-viewer
     spec:
       containers:
-      - image: jiripetrlik/registry-viewer
+      - image: jiripetrlik/registry-viewer:v0.1
         name: registry-viewer
         env:
         - name: registry_url

@@ -11,10 +11,10 @@ items:
     name: registry-viewer
   spec:
     tags:
-    - name: 'latest'
+    - name: 'v0.1'
       annotations:
         description: Registry Viewer image
-        version: 'latest'
+        version: 'v0.1'
       from:
         kind: DockerImage
-        name: registry.hub.docker.com/jiripetrlik/registry-viewer:latest
+        name: registry.hub.docker.com/jiripetrlik/registry-viewer:v0.1

@@ -86,7 +86,7 @@ repository](https://hub.docker.com/r/jiripetrlik/registry-viewer/).
 Use following command to run Registry Viewer in Docker:
 
 ```
-docker run -d --name registry-viewer-container -p 8080:8080 jiripetrlik/registry-viewer
+docker run -d --name registry-viewer-container -p 8080:8080 jiripetrlik/registry-viewer:v0.1
 ```
 
 List of additional parameters:
