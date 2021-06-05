@@ -1,5 +1,9 @@
 # Registry viewer
 
+![CI build](https://github.com/jiripetrlik/registry-viewer/actions/workflows/maven.yml/badge.svg)
+
+![Docker build](https://github.com/jiripetrlik/registry-viewer/actions/workflows/docker.yml/badge.svg)
+
 Registry Viewer is a web application for browsing Docker registries.
 It uses version 2 of the registry API and allows both authenticated and
 non authenticated login. By default the application displays form for
