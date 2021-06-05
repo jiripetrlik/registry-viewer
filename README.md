@@ -49,7 +49,7 @@ mvn clean install
 ```
 
 It will create
-executable jar **registry-viewer-version.jar** in the **target**
+executable jar **registry-viewer.jar** in the **target**
 directory. The file will contain embeded Tomcat servlet container
 and all libraries which are required by Registry viewer application
 to run.
@@ -58,7 +58,7 @@ to run.
 
 To start the application use:
 ```
-java -jar registry-viewer-version.jar
+java -jar registry-viewer.jar
 ```
 
 It will run Tomcat container and deploy the application to it. You can
@@ -103,7 +103,7 @@ List of additional parameters:
 Docker image for Registry Viewer is built using the Dockerfile in the
 project parent directory. It can be built by running following command:
 ```
-mvn clean package dockerfile:build
+docker build . -t registry-viewer
 ```
 
 It requires access to the Docker daemon. See Docker documentation
