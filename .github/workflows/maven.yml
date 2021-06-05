@@ -23,8 +23,3 @@ jobs:
         distribution: 'adopt'
     - name: Build with Maven
       run: mvn -B clean verify --file pom.xml
-    - run: mkdir staging && cp target/*.jar staging
-    - uses: actions/upload-artifact@v2
-      with:
-        name: registry-viewer
-        path: staging
