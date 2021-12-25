@@ -1,0 +1,29 @@
+networks:
+  testing-net: {}
+services:
+  registry:
+    image: jiripetrlik/testing-registry
+    ports:
+      - 5000:5000
+    networks:
+      - testing-net
+  registry-viewer:
+    build: ../
+    ports:
+      - 8080:8080
+    networks:
+      - testing-net
+    depends_on:
+      - registry
+  cypress:
+    image: cypress/included:9.2.0
+    environment:
+      - CYPRESS_baseUrl=http://registry-viewer:8080
+    volumes:
+      - ./:/e2e
+    working_dir: /e2e
+    networks:
+      - testing-net
+    depends_on:
+      - registry
+      - registry-viewer
