@@ -157,6 +157,15 @@ List of additional template parameters can be shown by:
 oc process --parameters template-name
 ```
 
+## End to end tests
+
+Run end to end tests:
+
+```
+cd e2e
+docker-compose up --exit-code-from cypress
+```
+
 ## License
 
 Registry Viewer is open source software, released under the
