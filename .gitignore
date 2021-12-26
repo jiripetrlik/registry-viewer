@@ -3,5 +3,6 @@
 .project
 .settings/
 .vscode/
+e2e/cypress/videos
 target/
 *.iml
